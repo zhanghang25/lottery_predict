@@ -4,7 +4,7 @@
 
 
       <n-button @click="goTo">返回首页</n-button>
-      <span>预测人：{{ route.query.name }}/日期 {{ route.query.date }}</span>
+      <span>预测人：{{ route.query.name }} / 日期 {{ route.query.date }}</span>
     </div>
     <p v-for="item in records">{{ item.value.split("").join(",") }}</p>
     <n-input placeholder="今日预测值" style="margin-bottom: 10px" type="textarea" :rows="3" v-model:value="curText" :allow-input="onlyAllowNumber" />
@@ -57,18 +57,19 @@ import {useRouter,useRoute} from 'vue-router'
           
         }
         async function  list(){
-          records.value =  await ipc.invoke(ipcApiRoute.getRecord)
+          records.value =  await ipc.invoke(ipcApiRoute.getRecord,route.query.name)
           console.log(records.value)
             console.log(111)
         }
-        function submitResult() {
+        async function submitResult() {
             console.log(curText)
             console.log(curText.value)
             if(curText.value == ""){
                 return
             }
-            ipc.invoke(ipcApiRoute.add,{value:curText.value,date:new Date()})
+            ipc.invoke(ipcApiRoute.add,{value:curText.value,date:new Date(),name:route.query.name})
             curText.value = ""
+            list()
             console.log(predict.value)
         }
 
@@ -82,6 +83,7 @@ import {useRouter,useRoute} from 'vue-router'
             predict,
             records,
             curText,
+            list,
             submitResult, 
             onlyAllowNumber: (value) => {
                 return /^[1-4]*$/.test(value)

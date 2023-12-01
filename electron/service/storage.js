@@ -102,14 +102,14 @@ class StorageService extends Service {
   /*
    * 查 Test data
    */
-  async getTestData(age = 0) {
+  async getTestData(name) {
     this.delTestData("")
     const key = this.demoDBKey.test_data;
     let data = this.demoDB.db
       .get(key)
       //.find({age: age}) 查找单个
       .filter(function (o) {
-        return o.value != "" && o.value != null;
+        return (o.value != "" && o.value != null )&& (!name || o.name == name);
       })
       .orderBy(["date","value"], ["desc", "desc"])
       //.orderBy(['age'], ['name']) 排序

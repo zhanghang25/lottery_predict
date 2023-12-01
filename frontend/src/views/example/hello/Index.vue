@@ -8,11 +8,11 @@
       您身边的预言家
     </p>
     <div style="display: flex;justify-content: center;">
-      <n-popover :show="see" trigger="click">
+      <n-popover @clickoutside="out" :show="see" trigger="click">
       <template #trigger>
         <n-button  @click="see = true" >新增人员</n-button>
       </template>
-      <div style="display: flex;"> <NInput v-model:value="addName" type="text" placeholder="请输入预测人" /> <NButton type="warning" @click="addUser">新增</NButton> </div>
+      <div style="display: flex;"> <n-input v-model:value="addName" type="text" placeholder="请输入预测人" /> <n-button type="warning" @click="addUser">新增</n-button> </div>
     </n-popover>
     </div>
     <n-select 
@@ -76,6 +76,10 @@ export default {
     this.handleSearch("")
   },
   methods: {
+    out(){
+      console.log(222)
+      this.see = false;
+    },  
    async addUser(){
 
       if(!this.addName){
