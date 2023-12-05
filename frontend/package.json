@@ -13,7 +13,9 @@
     "vue-router": "^4.0.14"
   },
   "eslintConfig": {
-    "vue/no-v-model-argument": 0
+    "rules": {
+      "vue/no-v-model-argument": 0
+    }
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

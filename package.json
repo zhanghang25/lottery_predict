@@ -1,5 +1,6 @@
 {
-  "name": "ee",
+  "name": "predict-master",
+  "shortcutName": "预测专家",
   "version": "3.8.0",
   "description": "A fast, desktop software development framework",
   "main": "main.js",
@@ -41,6 +42,11 @@
     "electron-egg",
     "ElectronEgg"
   ],
+  "eslintConfig": {
+    "rules": {
+      "vue/no-v-model-argument": 0
+    }
+  },
   "author": "哆啦好梦, Inc <530353222@qq.com>",
   "license": "Apache",
   "devDependencies": {

@@ -1,18 +1,12 @@
 {
-  "productName": "ee",
+  "productName": "predict-master-tool",
   "appId": "com.electron.ee",
   "copyright": "© 2023 哆啦好梦 Technology Co., Ltd.",
   "directories": {
     "output": "out"
   },
   "asar": true,
-  "files": [
-    "**/*",
-    "!frontend/",
-    "!run/",
-    "!logs/",
-    "!data/"
-  ],
+  "files": ["**/*", "!frontend/", "!run/", "!logs/", "!data/"],
   "extraResources": {
     "from": "build/extraResources/",
     "to": "extraResources"
@@ -26,7 +20,7 @@
     "installerHeaderIcon": "build/icons/icon.ico",
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
-    "shortcutName": "预测小软件"
+    "shortcutName": "预测专家"
   },
   "mac": {
     "icon": "build/icons/icon.icns",
@@ -46,9 +40,7 @@
   "linux": {
     "icon": "build/icons/icon.icns",
     "artifactName": "${productName}-${os}-${version}-${arch}.${ext}",
-    "target": [
-      "deb"
-    ],
+    "target": ["deb"],
     "category": "Utility"
   }
 }

@@ -22,7 +22,7 @@ module.exports = (appInfo) => {
    * 主窗口
    */
   config.windowsOption = {
-    title: "预测小软件",
+    title: "预测专家",
     width: 980,
     height: 650,
     minWidth: 400,

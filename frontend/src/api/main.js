@@ -7,7 +7,9 @@ const ipcApiRoute = {
   add: "controller.example.add",
   getRecord: "controller.example.find",
   addUser: "controller.example.addUser",
+  deleteUser: "controller.example.deleteUser",
   selectUser: "controller.example.selectUser",
+  predict: "controller.example.predict",
 };
 
 export { ipcApiRoute };

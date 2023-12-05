@@ -1,12 +1,15 @@
 <template>
 <div>
-    <div style="display: flex;justify-content: space-between;margin-inline: 20px;">
+    <div style="display: flex;justify-content: space-between;margin-inline: 20px;margin-block: 10px">
 
 
       <n-button @click="goTo">返回首页</n-button>
       <span>预测人：{{ route.query.name }} / 日期 {{ route.query.date }}</span>
     </div>
-    <p v-for="item in records">{{ item.value.split("").join(",") }}</p>
+    <div style="height:100px;overflow-y: scroll">
+
+    <p :key="index" v-for="(item,index) in records">{{ item.value.split("").join(",") }}</p>
+    </div>
     <n-input placeholder="今日预测值" style="margin-bottom: 10px" type="textarea" :rows="3" v-model:value="curText" :allow-input="onlyAllowNumber" />
     <n-button @click="submitResult" type="info">提交预测</n-button>
     <div style="display: flex;justify-content: center;margin-block:20px">
@@ -19,10 +22,12 @@
       style="margin-right:10px"
     />
   <n-button @click="predictValue" type="primary">输入并预测</n-button>
-  <p>
-    {{ text }}
-  </p>
 </div>
+  <div style="font-size: 16px">
+    预测结果：<div :key="index" v-for="(item,index) in text">
+        {{item}}
+      </div>  
+  </div>
 </div>
 </template>
 
@@ -49,12 +54,14 @@ import {useRouter,useRoute} from 'vue-router'
         const records = ref([])
         const text = ref("")
         const route = useRoute()
-        function predictValue(){
+        async function predictValue(){
           curText.value += "" + predict.value
-          predict.value = ""
           console.log(route)
           console.log(11122)
-          
+          let result = await ipc.invoke(ipcApiRoute.predict,{num:predict.value,value:curText.value,name:route.query.name})
+          console.log(result)
+          predict.value = ""
+          text.value = result.split("\n")
         }
         async function  list(){
           records.value =  await ipc.invoke(ipcApiRoute.getRecord,route.query.name)
@@ -67,10 +74,11 @@ import {useRouter,useRoute} from 'vue-router'
             if(curText.value == ""){
                 return
             }
-            ipc.invoke(ipcApiRoute.add,{value:curText.value,date:new Date(),name:route.query.name})
+            ipc.invoke(ipcApiRoute.add,{value:curText.value,date:new Date(),name:route.query.name},records.value.length)
             curText.value = ""
             list()
             console.log(predict.value)
+
         }
 
         const router = useRouter()        
@@ -95,3 +103,8 @@ import {useRouter,useRoute} from 'vue-router'
     }
   })
 </script>
+<style scoped>
+::-webkit-scrollbar {
+    display: none;
+}
+</style>

@@ -29,7 +29,7 @@ class ExampleController extends Controller {
     return "hello electron-egg";
   }
 
-  async addUser(name){
+  async addUser(name) {
     const resutl = await Services.get("storage").addUser(name);
     return result;
   }
@@ -39,14 +39,29 @@ class ExampleController extends Controller {
     return result;
   }
 
-  async add(params) {
+  async add(params, num) {
+    if (num >= 10) {
+      await Services.get("storage").delRecordData();
+    }
     const result = await Services.get("storage").addTestData(params);
+    console.log(result);
+    return result;
+  }
+
+  async deleteUser(params) {
+    const result = await Services.get("storage").deleteUser(params);
     console.log(result);
     return result;
   }
 
   async find(params) {
     const result = await Services.get("storage").getTestData(params);
+    console.log(result);
+    return result;
+  }
+
+  async predict(params) {
+    const result = await Services.get("storage").predict(params);
     console.log(result);
     return result;
   }

@@ -1,0 +1,11 @@
+{
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "vue/no-v-model-argument": 0
+    },
+    "env": {
+        "es6": true
+    }
+}

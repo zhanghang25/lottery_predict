@@ -16,8 +16,9 @@
     </n-popover>
     </div>
     <n-select 
-    style="display: inline-block;width: 200px;margin: 0 auto;"
+    style="display: inline-block;width: 350px;margin: 0 auto;"
     v-model:value="name" 
+    :render-option="renderLabel"
     filterable 
     :options="options" 
     @search="handleSearch" 
@@ -36,8 +37,8 @@
 <script>
 import {ipc} from '@/utils/ipcRenderer.js'
 import {ipcApiRoute} from '@/api/main.js'
-import { NInput,NSelect,NButton,NPopover,useMessage,createDiscreteApi } from 'naive-ui';
-
+import { NInput,NSelect,NButton,NPopover,useMessage,createDiscreteApi, NSpace,NTooltip } from 'naive-ui';
+import {h} from 'vue'
 const { message, notification, dialog, loadingBar } = createDiscreteApi(
   ['message', 'dialog', 'notification', 'loadingBar']
 )
@@ -48,6 +49,8 @@ export default {
     NPopover,
     NButton,
     NInput,
+    NSpace,
+    NTooltip,
   },
   data() {
     return {
@@ -80,6 +83,24 @@ export default {
       console.log(222)
       this.see = false;
     },  
+    renderLabel({option,node}) {
+    return   h(NTooltip, null, {
+          trigger: () => node,
+          default: () => h(NButton, { type:"error",style:"display:inline-block",onClick: async ()=>{
+            console.log(option)
+            let result = await ipc.invoke(ipcApiRoute.deleteUser,option.value)
+            this.handleSearch("")
+            message.info("删除成功！")
+          } }, '删除')
+        })
+      // return option.value;
+      // return h("div",{
+      //   style: 'display: flex; justify-content: space-evenly;align-items:center;width: 100%'
+      // }, [
+      //   h('div', option.value),
+      //   option.value ? h(NButton, { type:"error",style:"display:inline-block" }, '删除') : "",
+      // ])
+    },
    async addUser(){
 
       if(!this.addName){
